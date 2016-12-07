@@ -23,7 +23,8 @@ main: $(OBJS)
 	chmod a+x $(TARGET)
 
 objs:
-	$(shell mv $(dir $(OBJS))/*.o $(OUT_OBJS)/)
+	$(shell mkdir $(OUT_OBJS)/$(dir $(OBJS)))
+	$(shell mv $(dir $(OBJS))/*.o $(OUT_OBJS)/$(dir $(OBJS))/)
 
 clean:
 	rm -rf $(OUT)
