@@ -2,20 +2,28 @@
 CC = gcc
 CFLAGS = -Wall -O
 
+
 OUT = out
 TARGET = $(OUT)/main
 OUT_OBJS = $(OUT)/objs
 
-SRC = $(wildcard src/*.c)
+SRC = src
+INCLUDES = includes
 
-OBJS = $(patsubst %.c, %.o, $(SRC))
+C_FILES = $(wildcard $(SRC)/*.c)
 
-$(TARGET): $(OBJS)
+OBJS = $(patsubst %.c, %.o, $(C_FILES))
+
+all: main objs
+
+main: $(OBJS)
 	@$(shell mkdir $(OUT))
 	@$(shell mkdir $(OUT_OBJS))
-	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
-	
+	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)	
 	chmod a+x $(TARGET)
 
+objs:
+	$(shell mv $(dir $(OBJS))/*.o $(OUT_OBJS)/)
+
 clean:
-	rm -rf $(OBJS) $(OUT)	
+	rm -rf $(OUT)
